@@ -7,11 +7,11 @@ I have "eclectic taste" in music, so generally when I make a playlist I just thr
 ### Usage
 
 	From your command line:
-	```
-		ruby genre-ify.rb
-	```
 
-1.	Go here and generate an oauth token that has all the permission scopes: https://developer.spotify.com/web-api/console/post-playlist-tracks/  Copy this token, and enter it when prompted by the script.
+		ruby genre-ify.rb
+
+
+1.	Go Spotify's Interactive API Console and generate an oauth token that has all the permission scopes: https://developer.spotify.com/web-api/console/post-playlist-tracks/  Copy this token, and enter it when prompted by the script.
 
 2. Enter your spotify username
 
@@ -22,4 +22,4 @@ I have "eclectic taste" in music, so generally when I make a playlist I just thr
 5. Enter a name for your new playlist.
 
 ***
-Some color commentary on the script. Initially I had created this script so that you would need to enter your own Spotify App ID and Secret Key from which I would generate a token, but in order to get a token with enough permissions to create a playlist the user would need to login to spotify and grant access, which means this script would need to act as a web server and catch the oauth callback redirect etc. which was more complicated than I wanted...plus I'm lazy. This was just easier.
+Some color commentary on the script. Initially I had created this script so that you would need to enter your own Spotify App ID and Secret Key. The using that I would generate a token. This was fine for pulling track and artist info, but in order to get a token with enough permissions to create a playlist the user would need to login to spotify and grant access. That meant I would need to handle providing an interface for a user to login and also catch the redirect from the oauth callback, which was more complicated than I wanted...plus I'm lazy. Having the user generate a token from the interactive web console was just easier.
