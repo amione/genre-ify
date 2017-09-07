@@ -6,12 +6,12 @@ I have "eclectic taste" in music, so generally when I make a playlist I just thr
 
 ### Usage
 
-	From your command line:
+From your command line run:
 
 		ruby genre-ify.rb
 
 
-1.	Go Spotify's Interactive API Console and generate an oauth token that has all the permission scopes: https://developer.spotify.com/web-api/console/post-playlist-tracks/  Copy this token, and enter it when prompted by the script.
+1. Go to Spotify's Interactive API Console and generate an oauth token that has all the permission scopes: https://developer.spotify.com/web-api/console/post-playlist-tracks/  Copy this token, and enter it when prompted by the script.
 
 2. Enter your spotify username
 
