@@ -192,7 +192,13 @@ for x in 0..all_bands do
 
 					non_array_band_genres = band_genres * ","
 
-					db.execute("insert into spotify_playlist_artists (band_id, band_name, band_url, band_genres) values ('#{band_id}','#{band_name_clean}','#{band_url}','#{non_array_band_genres}');")
+					if non_array_band_genres.include? "'"
+						non_array_band_genres_clean = non_array_band_genres.gsub("'", "''")
+					else
+						non_array_band_genres_clean = non_array_band_genres
+					end
+
+					db.execute("insert into spotify_playlist_artists (band_id, band_name, band_url, band_genres) values ('#{band_id}','#{band_name_clean}','#{band_url}','#{non_array_band_genres_clean}');")
 
 				end
 
@@ -209,6 +215,8 @@ for x in 0..all_bands do
 	end #end if bands != ""
 
 end #end all_bands do
+
+#getting last group of bands
 
 url_counter += 1
 #puts url_counter
@@ -253,7 +261,13 @@ for x in 0..artist_total do
 
 	non_array_band_genres = band_genres * ","
 
-	db.execute("insert into spotify_playlist_artists (band_id, band_name, band_url, band_genres) values ('#{band_id}','#{band_name_clean}','#{band_url}','#{non_array_band_genres}');")
+	if non_array_band_genres.include? "'"
+		non_array_band_genres_clean = non_array_band_genres.gsub("'", "''")
+	else
+		non_array_band_genres_clean = non_array_band_genres
+	end
+
+	db.execute("insert into spotify_playlist_artists (band_id, band_name, band_url, band_genres) values ('#{band_id}','#{band_name_clean}','#{band_url}','#{non_array_band_genres_clean}');")
 
 end
 
@@ -280,7 +294,14 @@ reduced_genre_count = unique_smoosh_and_split.count - 1
 for x in 0..reduced_genre_count do
 	solo_genre = unique_smoosh_and_split[x]
 	if solo_genre != ""
-		db.execute( "insert into spotify_playlist_genres (playlist_genres) values ('#{solo_genre}');")
+
+		if solo_genre.include? "'"
+			solo_genre_clean = solo_genre.gsub("'", "''")
+		else
+			solo_genre_clean = solo_genre
+		end
+
+		db.execute( "insert into spotify_playlist_genres (playlist_genres) values ('#{solo_genre_clean}');")
 	end
 end
 
@@ -295,8 +316,20 @@ for x in 0..aga_count do
 	band_id_lookup = artist_genre_arrays[x][0]
 	band_genre_lookup = artist_genre_arrays[x][1]
 
-	if band_genre_lookup != ""
-		db.execute("update spotify_playlist_tracks set genres = '#{band_genre_lookup}' where artist_id = '#{band_id_lookup}';")
+	if band_id_lookup.include? "'"
+		band_id_lookup_clean = band_id_lookup.gsub("'", "''")
+	else
+		band_id_lookup_clean = band_id_lookup
+	end
+
+	if band_genre_lookup.include? "'"
+		band_genre_lookup_clean = band_genre_lookup.gsub("'", "''")
+	else
+		band_genre_lookup_clean = band_genre_lookup
+	end
+
+	if band_genre_lookup_clean != ""
+		db.execute("update spotify_playlist_tracks set genres = '#{band_genre_lookup_clean}' where artist_id = '#{band_id_lookup_clean}';")
 	end
 
 end
@@ -316,9 +349,15 @@ end
 print "Enter Your Genre Selection: "
 genre_selection = gets.strip
 
+if genre_selection.include? "'"
+	genre_selection_clean = genre_selection.gsub("'", "''")
+else
+	genre_selection_clean = genre_selection
+end
+
 puts "Selecting tracks that match your genre selection..."
 
-matching_tracks = db.execute("select track_id from spotify_playlist_tracks where genres like '%#{genre_selection}%';")
+matching_tracks = db.execute("select track_id from spotify_playlist_tracks where genres like '%#{genre_selection_clean}%';")
 
 match_count = matching_tracks.count - 1
 
